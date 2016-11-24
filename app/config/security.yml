@@ -1,24 +1,27 @@
-# To get started with security, check out the documentation:
-# http://symfony.com/doc/current/security.html
-security:
+security: 
+  access_control: 
+    - 
+      path: ^/user
+      roles: ROLE_USER
+  firewalls: 
+    dev: 
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main: 
+      anonymous: ~
+      http_basic_ldap: 
+        dn_string: "uid={username},ou=people,dc=univ-fcomte,dc=fr"
+        service: ldap
+  providers: 
+    in_memory: 
+      memory: ~
+    my_ldap: 
+      ldap: 
+        base_dn: "dc=univ-fcomte,dc=fr"
+        default_roles: ROLE_USER
+        search_dn: null
+        search_password: null
+        service: ldap
+        filter: (uid={username})
+        uid_key: uid
 
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
-    providers:
-        in_memory:
-            memory: ~
-
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
-
-            # http_basic: ~
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
