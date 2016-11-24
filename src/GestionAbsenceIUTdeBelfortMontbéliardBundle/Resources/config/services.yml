@@ -1,4 +1,0 @@
-services:
-#    gestion_absence_iu_tde_belfort_montbéliard.example:
-#        class: GestionAbsenceIUTdeBelfortMontbéliardBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]

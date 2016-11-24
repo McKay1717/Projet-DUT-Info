@@ -1,3 +1,8 @@
+gestion.abs.iutbm.:
+    resource: "@Gestion_Abs_IUTBM_Bundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 gestion_absence_iu_tde_belfort_montbéliard:
     resource: "@GestionAbsenceIUTdeBelfortMontbéliardBundle/Controller/"
     type:     annotation

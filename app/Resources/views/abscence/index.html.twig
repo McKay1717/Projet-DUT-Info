@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Abscences list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Debutabs</th>
+                <th>Finabs</th>
+                <th>Fichjustificatif</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for abscence in abscences %}
+            <tr>
+                <td><a href="{{ path('abscence_show', { 'id': abscence.id }) }}">{{ abscence.debutAbs }}</a></td>
+                <td>{% if abscence.finAbs %}{{ abscence.finAbs|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ abscence.fichJustificatif }}</td>
+                <td>{{ abscence.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('abscence_show', { 'id': abscence.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('abscence_edit', { 'id': abscence.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('abscence_new') }}">Create a new abscence</a>
+        </li>
+    </ul>
+{% endblock %}
