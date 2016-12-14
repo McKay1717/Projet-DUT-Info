@@ -12,6 +12,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+    	
         return $this->render('Gestion_Abs_IUTBM_Bundle:Default:index.html.twig');
     }
 }

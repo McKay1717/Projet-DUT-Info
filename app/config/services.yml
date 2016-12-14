@@ -14,3 +14,9 @@ services:
             - localhost   # host
             - 9999         # port
       
+    ldap_auth:
+        class:     Gestion_Abs_IUTBM_Bundle\Security\LdapAuthenticator
+        arguments: ["@security.password_encoder"]
+        
+    app.webservice_user_provider:
+        class: Gestion_Abs_IUTBM_Bundle\Security\LdapProviderInterface

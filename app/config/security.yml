@@ -9,19 +9,13 @@ security:
       security: false
     main: 
       anonymous: ~
-      http_basic_ldap: 
-        dn_string: "uid={username},ou=people,dc=univ-fcomte,dc=fr"
-        service: ldap
+      simple_form:
+          authenticator: ldap_auth
+          check_path:    login
+          login_path:    login
   providers: 
     in_memory: 
       memory: ~
-    my_ldap: 
-      ldap: 
-        base_dn: "dc=univ-fcomte,dc=fr"
-        default_roles: ROLE_USER
-        search_dn: null
-        search_password: null
-        service: ldap
-        filter: (uid={username})
-        uid_key: uid
-
+    webservice:
+      id: app.webservice_user_provider
+   
