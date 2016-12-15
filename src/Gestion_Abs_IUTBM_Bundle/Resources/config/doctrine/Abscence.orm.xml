@@ -12,12 +12,12 @@
         <option name="default">CURRENT_TIMESTAMP</option>
       </options>
     </field>
-    <field name="finAbs" type="datetime" column="fin_abs" nullable="true"/>
     <field name="fichJustificatif" type="string" column="fich_justificatif" length="255" nullable="false">
       <options>
         <option name="fixed"/>
       </options>
     </field>
+    <field name="finAbs" type="datetime" column="fin_abs" nullable="true"/>
     <many-to-one field="user" target-entity="User" fetch="LAZY">
       <join-columns>
         <join-column name="user_id" referenced-column-name="id"/>

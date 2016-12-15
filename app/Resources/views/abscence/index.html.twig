@@ -7,8 +7,8 @@
         <thead>
             <tr>
                 <th>Debutabs</th>
-                <th>Finabs</th>
                 <th>Fichjustificatif</th>
+                <th>Finabs</th>
                 <th>Id</th>
                 <th>Actions</th>
             </tr>
@@ -17,8 +17,8 @@
         {% for abscence in abscences %}
             <tr>
                 <td><a href="{{ path('abscence_show', { 'id': abscence.id }) }}">{{ abscence.debutAbs }}</a></td>
-                <td>{% if abscence.finAbs %}{{ abscence.finAbs|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ abscence.fichJustificatif }}</td>
+                <td>{% if abscence.finAbs %}{{ abscence.finAbs|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ abscence.id }}</td>
                 <td>
                     <ul>

@@ -10,12 +10,12 @@
                 <td>{% if abscence.debutAbs %}{{ abscence.debutAbs|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
             <tr>
-                <th>Finabs</th>
-                <td>{% if abscence.finAbs %}{{ abscence.finAbs|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
                 <th>Fichjustificatif</th>
                 <td>{{ abscence.fichJustificatif }}</td>
+            </tr>
+            <tr>
+                <th>Finabs</th>
+                <td>{% if abscence.finAbs %}{{ abscence.finAbs|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Id</th>

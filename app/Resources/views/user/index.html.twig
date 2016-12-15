@@ -7,6 +7,13 @@
         <thead>
             <tr>
                 <th>Uid</th>
+                <th>Ine</th>
+                <th>Etuid</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Cn</th>
+                <th>Ufclibellediplome</th>
+                <th>Ufclibelleetape</th>
                 <th>Id</th>
                 <th>Actions</th>
             </tr>
@@ -15,6 +22,13 @@
         {% for user in users %}
             <tr>
                 <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.uid }}</a></td>
+                <td>{{ user.ine }}</td>
+                <td>{{ user.etuid }}</td>
+                <td>{{ user.email }}</td>
+                <td>{% if user.roles %}{{ user.roles|join(', ') }}{% endif %}</td>
+                <td>{{ user.cn }}</td>
+                <td>{{ user.ufclibellediplome }}</td>
+                <td>{{ user.ufclibelleetape }}</td>
                 <td>{{ user.id }}</td>
                 <td>
                     <ul>

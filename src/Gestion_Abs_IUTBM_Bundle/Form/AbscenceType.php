@@ -13,7 +13,7 @@ class AbscenceType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('debutAbs')->add('finAbs')->add('fichJustificatif')->add('user')        ;
+        $builder->add('debutAbs')->add('fichJustificatif')->add('finAbs')->add('user')        ;
     }
     
     /**

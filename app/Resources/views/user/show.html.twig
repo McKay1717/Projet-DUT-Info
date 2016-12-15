@@ -10,6 +10,34 @@
                 <td>{{ user.uid }}</td>
             </tr>
             <tr>
+                <th>Ine</th>
+                <td>{{ user.ine }}</td>
+            </tr>
+            <tr>
+                <th>Etuid</th>
+                <td>{{ user.etuid }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{% if user.roles %}{{ user.roles|join(', ') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cn</th>
+                <td>{{ user.cn }}</td>
+            </tr>
+            <tr>
+                <th>Ufclibellediplome</th>
+                <td>{{ user.ufclibellediplome }}</td>
+            </tr>
+            <tr>
+                <th>Ufclibelleetape</th>
+                <td>{{ user.ufclibelleetape }}</td>
+            </tr>
+            <tr>
                 <th>Id</th>
                 <td>{{ user.id }}</td>
             </tr>

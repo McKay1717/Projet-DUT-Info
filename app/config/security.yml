@@ -7,15 +7,20 @@ security:
     dev: 
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
-    main: 
+    main:
       anonymous: ~
-      simple_form:
-          authenticator: ldap_auth
-          check_path:    login
-          login_path:    login
+      logout: ~
+      form_login:
+         login_path: login
+         check_path: login
+      guard:
+         authenticators:
+             - ldap_auth
+
   providers: 
     in_memory: 
       memory: ~
-    webservice:
-      id: app.webservice_user_provider
-   
+    our_db_provider:
+      entity:
+         class: Gestion_Abs_IUTBM_Bundle:User
+         property: uid

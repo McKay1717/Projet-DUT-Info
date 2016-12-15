@@ -2,31 +2,16 @@
 probably extend your base template, like base.html.twig #}
 {% extends 'base.html.twig' %}
 {% block body %}
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			{% if error %}
-			<div>
-				<div class="alert alert-danger text-center" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			</div>
-			{% endif %}
-		</div>
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<form action="{{ path('login') }}" method="post" class="text-center">
-				<div class="form-group">
-					<label for="username">Username:</label> <input type="text"
-						id="username" name="_username" value="{{ last_username }}" />
-				</div>
-				<div class="form-group">
-					<label for="password">Password:</label> <input type="password"
-						id="password" name="_password" /> <input type="hidden"
-						name="_target_path" value="/" />
-				</div>
+{{ error }}
+
+<form action="{{ path('login') }}" method="POST">
+	<label for="username">Username</label> <input type="text"
+		name="username" class="form-control" id="username"
+		placeholder="Username"> <label for="password">Password</label>
+	<input type="password" name="password" class="form-control"
+		id="password" placeholder="Password">
+	<button type="submit">Login</button>
+</form>
 
 
-				<button class="btn btn-default" type="submit">login</button>
-			</form>
-		</div>
-	</div>
-	
-	{% endblock %}
+{% endblock %}
