@@ -67,3 +67,13 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+vich_uploader:
+    db_driver: orm 
+    mappings:
+        product_image:
+            uri_prefix:         /images/abs
+            upload_destination: %kernel.root_dir%/../web/images/products
+            inject_on_load:     false
+            delete_on_update:   false
+            delete_on_remove: true  

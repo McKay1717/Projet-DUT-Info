@@ -14,7 +14,7 @@ class SecurityController extends Controller {
 	{
 		$user = $this->getUser();
 		if ($user instanceof UserInterface) {
-			return $this->redirectToRoute('homepage');
+			return $this->redirectToRoute('/');
 		}
 	
 		/** @var AuthenticationException $exception */

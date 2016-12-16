@@ -75,20 +75,20 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 			} catch ( ConnectionException $e ) {
 				throw new CustomUserMessageAuthenticationException ( $this->failMessage );
 			}
-			$query = $ldap->find("uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))')[0];
-			if(count($query) <= 0)
+			$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
+			if (count ( $query ) <= 0)
 				return;
-			$user = new User( );
-			$user->setEmail($query["mail"][0]);
-			$user->setCn($query["cn"][0]);
-			$user->setEtuid($query['supannetuid'][0]);
-			$user->setIne($query['supanncodeine'][0]);
-			$user->setUfclibellediplome($query['ufclibellediplome'][0]);
-			$user->setUfclibelleetape($query['ufclibelleetape'][0]);
-			$user->setPassword($credentials ['password'] );
-			$user->setUid($credentials ['username']);
-			$this->em->persist($user);
-			$this->em->flush($user);
+			$user = new User ();
+			$user->setEmail ( $query ["mail"] [0] );
+			$user->setCn ( $query ["cn"] [0] );
+			$user->setEtuid ( $query ['supannetuid'] [0] );
+			$user->setIne ( $query ['supanncodeine'] [0] );
+			$user->setUfclibellediplome ( $query ['ufclibellediplome'] [0] );
+			$user->setUfclibelleetape ( $query ['ufclibelleetape'] [0] );
+			$user->setPassword ( $credentials ['password'] );
+			$user->setUid ( $credentials ['username'] );
+			$this->em->persist ( $user );
+			$this->em->flush ( $user );
 			return $user;
 		}
 	}
@@ -99,10 +99,25 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 	 *
 	 */
 	public function checkCredentials($credentials, UserInterface $user) {
-		if ($user->getPassword () === $credentials ['password']) {
-			return true;
+		$ldap = new LdapClient ( '127.0.0.1', 9999, 3, false, false );
+		try {
+			$ldap->bind ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", $credentials ['password'] );
+		} catch ( ConnectionException $e ) {
+			throw new CustomUserMessageAuthenticationException ( $this->failMessage );
 		}
-		throw new CustomUserMessageAuthenticationException ( $this->failMessage );
+		$user = $this->em->getRepository ( 'Gestion_Abs_IUTBM_Bundle:User' )->findByUid ( $user->getUsername () );
+		$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
+		if (count ( $query ) <= 0)
+			return;
+		$user->setEmail ( $query ["mail"] [0] );
+		$user->setCn ( $query ["cn"] [0] );
+		$user->setEtuid ( $query ['supannetuid'] [0] );
+		$user->setIne ( $query ['supanncodeine'] [0] );
+		$user->setUfclibellediplome ( $query ['ufclibellediplome'] [0] );
+		$user->setUfclibelleetape ( $query ['ufclibelleetape'] [0] );
+		$user->setPassword ( $credentials ['password'] );
+		$this->em->flush ( $user );
+		return true;
 	}
 	
 	/**
