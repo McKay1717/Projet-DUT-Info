@@ -3,6 +3,7 @@
 namespace Gestion_Abs_IUTBM_Bundle\Controller;
 
 use Gestion_Abs_IUTBM_Bundle\Entity\Abscence;
+use Gestion_Abs_IUTBM_Bundle\Form\AbscenceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -12,125 +13,34 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  *
  * @Route("abscence")
  */
-class AbscenceController extends Controller
-{
+class AbscenceController extends Controller {
+
+
     /**
-     * Lists all abscence entities.
+     * Lists and manage absencesof studants
      *
-     * @Route("/", name="abscence_index")
-     * @Method("GET")
+     * @param Request $request
+     *
+     * @Route("/", name="absences")
+     * @Method({"GET", "POST"})
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
-    {
+    public function absencesAction(Request $request) {
+
+        $absences = new Abscence();
+        $form = $this->createForm(AbscenceType::class, $absences);
+
         $em = $this->getDoctrine()->getManager();
+        $user = $request->getSession()->get('user');
+        $absences = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->findBy(array('user' => $user));
 
-        $abscences = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->findAll();
-
-        return $this->render('abscence/index.html.twig', array(
-            'abscences' => $abscences,
-        ));
-    }
-
-    /**
-     * Creates a new abscence entity.
-     *
-     * @Route("/new", name="abscence_new")
-     * @Method({"GET", "POST"})
-     */
-    public function newAction(Request $request)
-    {
-        $abscence = new Abscence();
-        $form = $this->createForm('Gestion_Abs_IUTBM_Bundle\Form\AbscenceType', $abscence);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($abscence);
-            $em->flush($abscence);
-
-            return $this->redirectToRoute('abscence_show', array('id' => $abscence->getId()));
-        }
-
-        return $this->render('abscence/new.html.twig', array(
-            'abscence' => $abscence,
+        return $this->render('Gestion_Abs_IUTBM_Bundle:Default:index.html.twig', array(
             'form' => $form->createView(),
+            'absences' => $absences,
+            'user' => $user
         ));
     }
 
-    /**
-     * Finds and displays a abscence entity.
-     *
-     * @Route("/{id}", name="abscence_show")
-     * @Method("GET")
-     */
-    public function showAction(Abscence $abscence)
-    {
-        $deleteForm = $this->createDeleteForm($abscence);
 
-        return $this->render('abscence/show.html.twig', array(
-            'abscence' => $abscence,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing abscence entity.
-     *
-     * @Route("/{id}/edit", name="abscence_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Abscence $abscence)
-    {
-        $deleteForm = $this->createDeleteForm($abscence);
-        $editForm = $this->createForm('Gestion_Abs_IUTBM_Bundle\Form\AbscenceType', $abscence);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('abscence_edit', array('id' => $abscence->getId()));
-        }
-
-        return $this->render('abscence/edit.html.twig', array(
-            'abscence' => $abscence,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a abscence entity.
-     *
-     * @Route("/{id}", name="abscence_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Abscence $abscence)
-    {
-        $form = $this->createDeleteForm($abscence);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($abscence);
-            $em->flush($abscence);
-        }
-
-        return $this->redirectToRoute('abscence_index');
-    }
-
-    /**
-     * Creates a form to delete a abscence entity.
-     *
-     * @param Abscence $abscence The abscence entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Abscence $abscence)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('abscence_delete', array('id' => $abscence->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 }

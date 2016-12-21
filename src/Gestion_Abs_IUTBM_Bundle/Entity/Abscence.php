@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="Abscence", indexes={@ORM\Index(name="fk_Abscence_User", columns={"user_id"})})
  * @ORM\Entity
+ *
  */
 class Abscence
 {
@@ -52,7 +53,10 @@ class Abscence
      */
     private $user;
 
-
+    public function __construct() {
+        $this->debutAbs = new \DateTime();
+        $this->finAbs = new \DateTime();
+    }
 
     /**
      * Set debutAbs

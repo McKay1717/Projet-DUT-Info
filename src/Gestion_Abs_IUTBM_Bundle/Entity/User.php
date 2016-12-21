@@ -303,6 +303,7 @@ class User implements UserInterface, EquatableInterface {
 	public function eraseCredentials() {
 		$this->setPassword(null);
 	}
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Symfony\Component\Security\Core\User\EquatableInterface::isEqualTo()

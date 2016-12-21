@@ -13,7 +13,7 @@ class AppKernel extends Kernel {
 				new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle (),
 				new AppBundle\AppBundle (),
 				new Vich\UploaderBundle\VichUploaderBundle (),
-				new Gestion_Abs_IUTBM_Bundle\Gestion_Abs_IUTBM_Bundle () 
+				new Gestion_Abs_IUTBM_Bundle\Gestion_Abs_IUTBM_Bundle (),
 		];
 		
 		if (in_array ( $this->getEnvironment (), [ 

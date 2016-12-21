@@ -1,13 +1,64 @@
 <!DOCTYPE html>
+
 <html>
+
     <head>
         <meta charset="UTF-8" />
+        <meta name="keywords" content="{% block motCles %}{% endblock %} }}"/>
+        <meta name="description" content="{% block description %}{% endblock %} }}"/>
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('bundles/framework/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/framework/css/my_css.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/framework/css/bootstrap-datetimepicker.min.css') }}">
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
+
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+    {% block body %}{% endblock %}
+
+    <script src="{{ asset('bundles/framework/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/framework/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/framework/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ asset('bundles/framework/js/bootstrap-filestyle.min.js') }}"></script>
+
+    {% block javascripts %}
+
+        <script>
+
+            (function ($) {
+
+                //error symfony
+                var $li = $('form fieldset ul li');
+                $li.parent().css({
+                    'list-style': 'none',
+                    'margin-left': '-40px',
+                });
+                $li.addClass('alert alert-danger');
+
+                //upload
+                $(":file").filestyle({
+                    buttonName: "btn-info"
+                });
+
+                //datepicker
+                $('.datetime').datetimepicker({
+                    todayBtn:"true",
+                    format:"dd-mm-yyyy hh:ii",
+                    autoclose:"true",
+                    pickerPosition:"bottom-left",
+                    startView:"year",
+                    minView:"hour",
+                    language:"fr"
+                });
+
+            })(jQuery);
+
+        </script>
+
+    {% endblock %}
+
     </body>
+
 </html>

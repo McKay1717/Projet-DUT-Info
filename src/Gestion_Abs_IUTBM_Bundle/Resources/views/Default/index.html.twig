@@ -1,2 +1,171 @@
-Hello World!
-{{ app.user.uid }}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% include 'Gestion_Abs_IUTBM_Bundle:include:nav.html.twig' %}
+
+    <section class="container">
+
+        <br><br><br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header well">
+                    <h1>Mes absences</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-offset-2 col-lg-8 well">
+                <h4>Information sur l'étudiant</h4>
+                <div class="row">
+                    <div class="col-lg-6 barre-droite">
+                        <strong>Pseudo </strong> : {{ user.uid }}<br>
+                        <strong>N° INE </strong> : {{ user.ine }}<br>
+                        <strong>Email </strong> : {{ user.email }}
+                    </div>
+                    <div class="col-lg-6">
+                        <strong>Nom </strong> : {{ user.cn }}<br>
+                        <strong>Diplome </strong> : {{ user.ufcLibelleDiplome }}<br>
+                        <strong>Etape </strong> : {{ user.ufcLibelleEtape }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-offset-2 col-lg-8 well">
+
+                <h4>Les absences</h4>
+
+                <table class="table table-responsive table-bordered table-striped" style="text-align: center">
+
+                    <thead>
+                        <tr>
+                            <th>N° absence</th>
+                            <th>Début de l'absence</th>
+                            <th>Fin de l'absence</th>
+                            <th>Justifier</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for absence in absences if absences is not empty%}
+
+                            {% if absence.fichJustificatif != '' %}
+
+                                <tr>
+                                    <td>{{ absence.id }}</td>
+                                    <td>{{ absence.debutAbs.date | date('d/m/Y (h:m)') }}</td>
+                                    <td>{{ absence.finAbs.date | date('d/m/Y (h:m)')}}</td>
+                                    <td><span class="glyphicon glyphicon-ok"></span></td>
+                                </tr>
+
+                            {% else %}
+
+                                <tr>
+                                    <td>{{ absence.id }}</td>
+                                    <td>{{ absence.debutAbs.date | date('d/m/Y (h:m)') }}</td>
+                                    <td><i>Non renseigné</i></td>
+                                    <td>
+
+                                        <button class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#absence">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </button>
+
+                                        <div class="modal fade" id="absence" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                                            <div class="modal-dialog">
+
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                                                        <h4 class="modal-title" id="myModalLabel">Justifier votre absence</h4>
+                                                    </div>
+
+                                                    <div class="modal-body">
+
+                                                        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+                                                        <fieldset>
+
+                                                            <div class="form-group">
+                                                                {{ form_label(form.debutAbs) }}
+                                                                <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                    <span class="glyphicon glyphicon-time"></span>
+                                                                </span>
+                                                                    {{ form_widget(form.debutAbs) }}
+                                                                </div>
+                                                                {{ form_errors(form.debutAbs) }}
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                {{ form_label(form.finAbs) }}
+                                                                <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                    <span class="glyphicon glyphicon-time"></span>
+                                                                </span>
+                                                                    {{ form_widget(form.finAbs) }}
+                                                                </div>
+                                                                {{ form_errors(form.finAbs) }}
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                {{ form_label(form.fichJustificatif) }}
+                                                                {{ form_widget(form.fichJustificatif) }}
+                                                                {{ form_errors(form.fichJustificatif) }}
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <button type="submit" class="btn btn-primary">Valider</button>
+                                                            </div>
+
+                                                        </fieldset>
+
+                                                        {{ form_rest(form) }}
+
+                                                        {{ form_end(form) }}
+
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                            {% endif %}
+
+                        {% else %}
+                            <tr>
+                                <td colspan="4">Vous n'avez pas de commande</td>
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+{% endblock %}
