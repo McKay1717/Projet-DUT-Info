@@ -3,13 +3,15 @@
 namespace Gestion_Abs_IUTBM_Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Abscence
  *
  * @ORM\Table(name="Abscence", indexes={@ORM\Index(name="fk_Abscence_User", columns={"user_id"})})
  * @ORM\Entity
- *
+ * @Vich\Uploadable
  */
 class Abscence
 {
@@ -21,11 +23,18 @@ class Abscence
     private $debutAbs = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var string
+     * @var String
      *
      * @ORM\Column(name="fich_justificatif", type="string", length=255, nullable=false)
      */
     private $fichJustificatif;
+
+    /**
+     * @var File
+     *
+     *  @Vich\UploadableField(mapping="product_image", fileNameProperty="fichJustificatif")
+     */
+    private $fileFichJustificatif;
 
     /**
      * @var \DateTime
@@ -104,6 +113,25 @@ class Abscence
     public function getFichJustificatif()
     {
         return $this->fichJustificatif;
+    }
+
+    /**
+     * @param File $fileFichJustificatif
+     *
+     * @return Abscence
+     */
+    public function setFileFichJustificatif(File $fileFichJustificatif)
+    {
+        $this->fileFichJustificatif = $fileFichJustificatif;
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getFileFichJustificatif()
+    {
+        return $this->fileFichJustificatif;
     }
 
     /**

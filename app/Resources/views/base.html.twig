@@ -45,7 +45,7 @@
                 //datepicker
                 $('.datetime').datetimepicker({
                     todayBtn:"true",
-                    format:"dd-mm-yyyy hh:ii",
+                    format:"dd/mm/yyyy (hh:ii)",
                     autoclose:"true",
                     pickerPosition:"bottom-left",
                     startView:"year",
@@ -56,6 +56,14 @@
             })(jQuery);
 
         </script>
+
+        {% if erreur is defined and erreur == true %}
+            <script>
+                (function ($) {
+                    $('.modal').modal('show');
+                })(jQuery);
+            </script>
+        {% endif %}
 
     {% endblock %}
 
