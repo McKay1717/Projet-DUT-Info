@@ -28,8 +28,6 @@ class SecurityController extends Controller {
             'error' => $exception ? $exception->getMessage() : NULL,
 		]);
 
-
-
 	}
 
 }
