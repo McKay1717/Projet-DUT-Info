@@ -105,7 +105,8 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 		} catch ( ConnectionException $e ) {
 			throw new CustomUserMessageAuthenticationException ( $this->failMessage );
 		}
-		$user = $this->em->getRepository ( 'Gestion_Abs_IUTBM_Bundle:User' )->findByUid ( $user->getUsername () );
+		//Check if one user
+		$user = $this->em->getRepository ( 'Gestion_Abs_IUTBM_Bundle:User' )->findByUid ( $user->getUsername () )[0];
 		$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
 		if (count ( $query ) <= 0)
 			return;
