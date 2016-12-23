@@ -15,35 +15,21 @@ class SecurityController extends Controller {
 	 */
 	public function loginAction(Request $request)
 	{
-		//$user = $this->getUser();
+		$user = $this->getUser();
 
-		/*if ($user instanceof UserInterface) {
+		if ($user instanceof UserInterface) {
 			return $this->redirectToRoute('/');
-		}*/
+		}
 
 		/** @var AuthenticationException $exception */
-		/*$exception = $this->get('security.authentication_utils')->getLastAuthenticationError();
+		$exception = $this->get('security.authentication_utils')->getLastAuthenticationError();
 	
 		return $this->render('Gestion_Abs_IUTBM_Bundle:Default:login.html.twig', [
             'error' => $exception ? $exception->getMessage() : NULL,
-		]);*/
+		]);
 
-		//portion de code à retirer
-
-        $u = $_POST['username'];
-
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('Gestion_Abs_IUTBM_Bundle:User')->findAll();
-
-        foreach ($users as $user) {
-            if ($u == $user->getUsername()) {
-                $session = new Session();
-                $session->set('user', $user);
-                var_dump($session->get('user'));
-                return $this->redirectToRoute('absences');
-            }
-        }
 
 
 	}
+
 }

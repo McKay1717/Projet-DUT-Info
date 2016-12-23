@@ -65,7 +65,7 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 	 *
 	 */
 	public function getUser($credentials, UserProviderInterface $userProvider) {
-		$ldap = new LdapClient ( '127.0.0.1', 9999, 3, false, false );
+		$ldap = new LdapClient ( '192.168.7.1', 9999, 3, false, false );
 		try {
 			return $userProvider->loadUserByUsername ( $credentials ['username'] );
 		} catch ( UsernameNotFoundException $e ) {
@@ -99,7 +99,7 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 	 *
 	 */
 	public function checkCredentials($credentials, UserInterface $user) {
-		$ldap = new LdapClient ( '127.0.0.1', 9999, 3, false, false );
+		$ldap = new LdapClient ( '192.168.7.1', 9999, 3, false, false );
 		try {
 			$ldap->bind ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", $credentials ['password'] );
 		} catch ( ConnectionException $e ) {

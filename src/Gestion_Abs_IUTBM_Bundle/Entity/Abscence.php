@@ -74,7 +74,7 @@ class Abscence
      *
      * @return Abscence
      */
-    public function setDebutAbs($debutAbs)
+    public function setDebutAbs(\DateTime $debutAbs)
     {
         $this->debutAbs = $debutAbs;
 
@@ -141,7 +141,7 @@ class Abscence
      *
      * @return Abscence
      */
-    public function setFinAbs($finAbs)
+    public function setFinAbs(\DateTime $finAbs)
     {
         $this->finAbs = $finAbs;
 
