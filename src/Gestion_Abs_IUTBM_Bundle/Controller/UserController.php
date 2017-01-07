@@ -26,7 +26,7 @@ class UserController extends Controller
 
         $users = $em->getRepository('Gestion_Abs_IUTBM_Bundle:User')->findAll();
 
-        return $this->render('user/index.html.twig', array(
+        return $this->render('user/abscences.html.twig', array(
             'users' => $users,
         ));
     }

@@ -29,13 +29,16 @@ class AbscenceController extends Controller {
      */
     public function absencesAction(Request $request) {
 
+        $security = $this->get('security.token_storage');
+        $token = $security->getToken();
+        $user = $token->getUser();
+
         $em = $this->getDoctrine()->getManager();
-        $user = $request->getSession()->get('user');
+        //$user = $request->getSession()->get('user');
         $absences = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->findBy(array('user' => $user));
 
-        return $this->render('Gestion_Abs_IUTBM_Bundle:Default:index.html.twig', array(
+        return $this->render('Gestion_Abs_IUTBM_Bundle:Default:abscences.html.twig', array(
             'absences' => $absences,
-            'user' => $user
         ));
 
     }
@@ -62,21 +65,28 @@ class AbscenceController extends Controller {
 
         if ($form->isSubmitted()) {
 
-            $finAbs = htmlspecialchars($_POST['gestion_abs_iutbm_bundle_abscence']['finAbs']);
-            $fileFichJustificatif = $form->getData()->getFileFichJustificatif();
+            //var_dump($form->getData()); die;
 
-            if ($debutAbs < $finAbs) {
-                $absence = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->find($id);
-                $absence->setFinAbs($finAbs);
-                $absence->setFileFichJustificatif($fileFichJustificatif);
-                $em->flush();
-                $request->getSession()->getFlashBag()->add('justifier', 'Votre justification a été pris en compte');
-                return $this->redirectToRoute('absences');
-            } else {
-                return $this->render('Gestion_Abs_IUTBM_Bundle:Default:justificatif.html.twig', array(
-                    'form' => $form->createView(),
-                    'erreurDate' => 'La date de retour est censé être après la date de départ'
-                ));
+            if ($form->isValid()) {
+
+                $finAbs = $form->getData()->getFinAbs();
+                $fileFichJustificatif = $form->getData()->getFileFichJustificatif();
+
+
+                if ($debutAbs < $finAbs) {
+                    $absence = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->find($id);
+                    $absence->setFinAbs($finAbs);
+                    $absence->setFileFichJustificatif($fileFichJustificatif);
+                    $em->flush();
+                    $request->getSession()->getFlashBag()->add('justifier', 'Votre justification a été pris en compte');
+                    return $this->redirectToRoute('absences');
+                } else {
+                    return $this->render('Gestion_Abs_IUTBM_Bundle:Default:justificatif.html.twig', array(
+                        'form' => $form->createView(),
+                        'erreurDate' => 'La date de retour est censé être après la date de départ'
+                    ));
+                }
+
             }
 
         }

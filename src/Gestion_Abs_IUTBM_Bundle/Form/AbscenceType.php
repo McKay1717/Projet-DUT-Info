@@ -59,8 +59,7 @@ class AbscenceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Gestion_Abs_IUTBM_Bundle\Entity\Abscence',
-            'debutAbs' => null
+            'data_class' => 'Gestion_Abs_IUTBM_Bundle\Entity\Abscence'
         ));
     }
 

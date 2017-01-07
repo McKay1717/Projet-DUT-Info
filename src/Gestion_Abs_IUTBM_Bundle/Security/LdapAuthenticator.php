@@ -54,8 +54,8 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 		}
 		
 		return array (
-				'username' => $request->request->get ( 'username' ),
-				'password' => $request->request->get ( 'password' ) 
+            'username' => $request->request->get ( 'username' ),
+            'password' => $request->request->get ( 'password' )
 		);
 	}
 	
@@ -69,15 +69,13 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 		try {
 			return $userProvider->loadUserByUsername ( $credentials ['username'] );
 		} catch ( UsernameNotFoundException $e ) {
-			
 			try {
 				$ldap->bind ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", $credentials ['password'] );
 			} catch ( ConnectionException $e ) {
 				throw new CustomUserMessageAuthenticationException ( $this->failMessage );
 			}
 			$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
-			if (count ( $query ) <= 0)
-				return;
+			if (count ( $query ) <= 0) return;
 			$user = new User ();
 			$user->setEmail ( $query ["mail"] [0] );
 			$user->setCn ( $query ["cn"] [0] );
@@ -105,11 +103,10 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 		} catch ( ConnectionException $e ) {
 			throw new CustomUserMessageAuthenticationException ( $this->failMessage );
 		}
-		$user = $this->em->getRepository ( 'Gestion_Abs_IUTBM_Bundle:User' )->findByUid ( $user->getUsername () );
+		$user = $this->em->getRepository ( 'Gestion_Abs_IUTBM_Bundle:User' )->findOneByUid ( $user->getUsername () );
 		$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
-		if (count ( $query ) <= 0)
-			return;
-		$user->setEmail ( $query ["mail"] [0] );
+		if (count ( $query ) <= 0) return;
+		$user->setEmail($query["mail"][0]);
 		$user->setCn ( $query ["cn"] [0] );
 		$user->setEtuid ( $query ['supannetuid'] [0] );
 		$user->setIne ( $query ['supanncodeine'] [0] );
@@ -126,7 +123,7 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 	 *
 	 */
 	public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey) {
-		$url = $this->router->generate ( '/' );
+		$url = $this->router->generate( 'absences' );
 		return new RedirectResponse ( $url );
 	}
 	

@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class DefaultController extends Controller {
 	/**
-	 * @Route("/", name="/")
+	 * @Route("/accueil", name="accueil")
 	 */
 	public function indexAction(){
 		return $this->render('Gestion_Abs_IUTBM_Bundle:Default:login.html.twig');

@@ -141,7 +141,7 @@ class Abscence
      *
      * @return Abscence
      */
-    public function setFinAbs(\DateTime $finAbs)
+    public function setFinAbs($finAbs)
     {
         $this->finAbs = $finAbs;
 
