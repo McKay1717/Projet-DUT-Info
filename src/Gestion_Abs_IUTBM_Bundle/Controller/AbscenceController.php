@@ -8,6 +8,7 @@ use Gestion_Abs_IUTBM_Bundle\Form\AbscenceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Abscence controller.
@@ -23,7 +24,7 @@ class AbscenceController extends Controller {
      * @param Request $request
      *
      * @Route("/", name="absences")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -34,8 +35,14 @@ class AbscenceController extends Controller {
         $user = $token->getUser();
 
         $em = $this->getDoctrine()->getManager();
-        //$user = $request->getSession()->get('user');
         $absences = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->findBy(array('user' => $user));
+
+        if ($request->getMethod() == "POST") {
+            $id = $request->get('absence');
+            $session = $request->getSession();
+            $session->set('absence', $id);
+            return $this->redirectToRoute('justification');
+        }
 
         return $this->render('Gestion_Abs_IUTBM_Bundle:Default:abscences.html.twig', array(
             'absences' => $absences,
@@ -48,13 +55,15 @@ class AbscenceController extends Controller {
      *
      * @param Request $request
      *
-     * @Route("/{id}", name="justification")
+     * @Route("/justification", name="justification")
      * @Method({"GET", "POST"})
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function justificationAction(Request $request, $id) {
+    public function justificationAction(Request $request) {
 
+        $session = $request->getSession();
+        $id = $session->get('absence');
         $absences = new Abscence();
         $em = $this->getDoctrine()->getManager();
         $absence = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->find($id);
