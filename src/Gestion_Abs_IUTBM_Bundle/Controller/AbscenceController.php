@@ -30,15 +30,15 @@ class AbscenceController extends Controller {
      */
     public function absencesAction(Request $request) {
 
-    	if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-    		throw $this->createAccessDeniedException();
+    	if (!$this->get('security.authorization_checker')->isGranted('ROLE_ETU')) {
+    		return $this->redirectToRoute('accueil');
     	}
         $security = $this->get('security.token_storage');
         $token = $security->getToken();
         $user = $token->getUser();
 
         $em = $this->getDoctrine()->getManager();
-        $absences = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->findBy(array('user' => $user));
+        $absences = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->findByUser($user);
 
         if ($request->getMethod() == "POST") {
             $id = $request->get('absence');
@@ -64,8 +64,8 @@ class AbscenceController extends Controller {
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function justificationAction(Request $request) {
-    	if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-    		throw $this->createAccessDeniedException();
+    	if (!$this->get('security.authorization_checker')->isGranted('ROLE_ETU')) {
+    		return $this->redirectToRoute('login');
     	}
         $session = $request->getSession();
         $id = $session->get('absence');
