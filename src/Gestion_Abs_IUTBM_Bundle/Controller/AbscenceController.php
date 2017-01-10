@@ -42,8 +42,9 @@ class AbscenceController extends Controller {
 
         if ($request->getMethod() == "POST") {
             $id = $request->get('absence');
+            $absence = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->find($id);
             $session = $request->getSession();
-            $session->set('absence', $id);
+            $session->set('absence', $absence);
             return $this->redirectToRoute('justification');
         }
 
@@ -68,27 +69,25 @@ class AbscenceController extends Controller {
     		return $this->redirectToRoute('login');
     	}
         $session = $request->getSession();
-        $id = $session->get('absence');
-        $absences = new Abscence();
+        $absence = $session->get('absence');
         $em = $this->getDoctrine()->getManager();
-        $absence = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->find($id);
-        $form = $this->createForm(AbscenceType::class, $absences);
+        $form = $this->createForm(AbscenceType::class, $absence);
         $debutAbs = $absence->getDebutAbs()->format('d/m/Y (H:i)');
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
 
-            //var_dump($form->getData()); die;
+            var_dump($form->getData()->getFinAbs());
+            var_dump($form->getData()->getFileFichJustificatif());
+            die;
 
             if ($form->isValid()) {
 
                 $finAbs = $form->getData()->getFinAbs();
                 $fileFichJustificatif = $form->getData()->getFileFichJustificatif();
 
-
                 if ($debutAbs < $finAbs) {
-                    $absence = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->find($id);
                     $absence->setFinAbs($finAbs);
                     $absence->setFileFichJustificatif($fileFichJustificatif);
                     $em->flush();

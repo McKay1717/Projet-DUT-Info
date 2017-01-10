@@ -81,9 +81,6 @@
                                     <td>{{ absence.debutAbs.date | date('d/m/Y (H:i)') }}</td>
                                     <td><i>Non renseigné</i></td>
                                     <td>
-                                        {#<a class="btn btn-danger btn-xs" href="{{ path('justification', {id: absence.id}) }}">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </a>#}
                                         <form action="{{ path('absences') }}" method="post">
                                             <input type="hidden" name="absence" value="{{ absence.id }}">
                                             <button type="submit" class="btn btn-danger btn-xs">

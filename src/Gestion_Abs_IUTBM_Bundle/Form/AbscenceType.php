@@ -22,16 +22,17 @@ class AbscenceType extends AbstractType
             ->add('finAbs', DateTimeType::class, array(
                 'label' => 'Fin de l\'absence',
                 'widget' => 'single_text',
-                'format' => 'd/m/Y (H:i)',
+                'input' => 'datetime',
+                'format' => 'dd/MM/yyyy (hh:ii)',
                 'attr' => array(
                     'class' => 'form-control datetime',
-                    'value' => ""
+                    'value' => "",
                 ),
                 'constraints' => array(
                     new Assert\NotBlank(['message' => 'Ce champ n\'est pas remplit']),
                     new Assert\DateTime([
-                        'format' => 'd/m/Y (H:i)',
-                        'message' => 'Mauvais format ( j/m/a (H:i) )'
+                        'format' => 'dd/MM/yyyy (hh:ii)',
+                        'message' => 'Mauvais format ( jj/mm/aaaaa (HH:mm) )'
                     ])
                 )
             ))
