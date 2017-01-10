@@ -309,7 +309,7 @@ class User implements UserInterface, EquatableInterface {
 	 * @see \Symfony\Component\Security\Core\User\EquatableInterface::isEqualTo()
 	 */
 	public function isEqualTo(UserInterface $user) {
-		// TODO: Auto-generated method stub
+		return $this->uid == $user->getUsername();
 
 	}
 

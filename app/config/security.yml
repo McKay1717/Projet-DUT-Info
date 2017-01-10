@@ -10,8 +10,8 @@ security:
     main:
       anonymous: ~
       logout:
-          path:   /logout
-          target: /
+         invalidate_session: false 
+         path:   /logout
       form_login:
          login_path: login
          check_path: login
