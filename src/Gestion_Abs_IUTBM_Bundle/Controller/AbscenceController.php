@@ -30,6 +30,9 @@ class AbscenceController extends Controller {
      */
     public function absencesAction(Request $request) {
 
+    	if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+    		throw $this->createAccessDeniedException();
+    	}
         $security = $this->get('security.token_storage');
         $token = $security->getToken();
         $user = $token->getUser();
@@ -61,7 +64,9 @@ class AbscenceController extends Controller {
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function justificationAction(Request $request) {
-
+    	if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+    		throw $this->createAccessDeniedException();
+    	}
         $session = $request->getSession();
         $id = $session->get('absence');
         $absences = new Abscence();

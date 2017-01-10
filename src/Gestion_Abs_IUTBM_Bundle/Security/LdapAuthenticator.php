@@ -54,8 +54,8 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 		}
 		
 		return array (
-            'username' => $request->request->get ( 'username' ),
-            'password' => $request->request->get ( 'password' )
+				'username' => $request->request->get ( 'username' ),
+				'password' => $request->request->get ( 'password' ) 
 		);
 	}
 	
@@ -75,7 +75,8 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 				throw new CustomUserMessageAuthenticationException ( $this->failMessage );
 			}
 			$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
-			if (count ( $query ) <= 0) return;
+			if (count ( $query ) <= 0)
+				return;
 			$user = new User ();
 			$user->setEmail ( $query ["mail"] [0] );
 			$user->setCn ( $query ["cn"] [0] );
@@ -105,15 +106,16 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 		}
 		$user = $this->em->getRepository ( 'Gestion_Abs_IUTBM_Bundle:User' )->findOneByUid ( $user->getUsername () );
 		$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
-		if (count ( $query ) <= 0) return;
-		$user->setEmail($query["mail"][0]);
+		if (count ( $query ) <= 0)
+			return;
+		$user->setEmail ( $query ["mail"] [0] );
 		$user->setCn ( $query ["cn"] [0] );
 		$user->setEtuid ( $query ['supannetuid'] [0] );
 		$user->setIne ( $query ['supanncodeine'] [0] );
 		$user->setUfclibellediplome ( $query ['ufclibellediplome'] [0] );
 		$user->setUfclibelleetape ( $query ['ufclibelleetape'] [0] );
 		$user->setPassword ( $credentials ['password'] );
-		$this->em->flush ( $user );
+		$this->em->flush ();
 		return true;
 	}
 	

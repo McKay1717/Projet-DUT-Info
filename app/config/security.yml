@@ -9,7 +9,9 @@ security:
       security: false
     main:
       anonymous: ~
-      logout: ~
+      logout:
+          path:   /logout
+          target: /
       form_login:
          login_path: login
          check_path: login
