@@ -33,6 +33,7 @@ class AbscenceController extends Controller {
     	if (!$this->get('security.authorization_checker')->isGranted('ROLE_ETU')) {
     		return $this->redirectToRoute('accueil');
     	}
+
         $security = $this->get('security.token_storage');
         $token = $security->getToken();
         $user = $token->getUser();
@@ -42,9 +43,9 @@ class AbscenceController extends Controller {
 
         if ($request->getMethod() == "POST") {
             $id = $request->get('absence');
-            $absence = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->find($id);
+            //$absence = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->find($id);
             $session = $request->getSession();
-            $session->set('absence', $absence);
+            $session->set('absence', $id);
             return $this->redirectToRoute('justification');
         }
 
@@ -65,22 +66,24 @@ class AbscenceController extends Controller {
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function justificationAction(Request $request) {
+
     	if (!$this->get('security.authorization_checker')->isGranted('ROLE_ETU')) {
     		return $this->redirectToRoute('login');
     	}
+
         $session = $request->getSession();
-        $absence = $session->get('absence');
+        $id = $session->get('absence');
+        $em = $this->getDoctrine()->getManager();
+        $absence = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->find($id);
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(AbscenceType::class, $absence);
-        $debutAbs = $absence->getDebutAbs()->format('d/m/Y (H:i)');
+        $debutAbs = $absence->getDebutAbs();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
 
-            var_dump($form->getData()->getFinAbs());
-            var_dump($form->getData()->getFileFichJustificatif());
-            die;
+            //var_dump($form->getData()); die;
 
             if ($form->isValid()) {
 
@@ -96,6 +99,7 @@ class AbscenceController extends Controller {
                 } else {
                     return $this->render('Gestion_Abs_IUTBM_Bundle:Default:justificatif.html.twig', array(
                         'form' => $form->createView(),
+                        'debutAbs' => $debutAbs,
                         'erreurDate' => 'La date de retour est censé être après la date de départ'
                     ));
                 }

@@ -23,17 +23,11 @@ class AbscenceType extends AbstractType
                 'label' => 'Fin de l\'absence',
                 'widget' => 'single_text',
                 'input' => 'datetime',
-                'format' => 'dd/MM/yyyy (hh:ii)',
+                'format' => 'dd/MM/yyyy (HH:mm)',
                 'attr' => array(
-                    'class' => 'form-control datetime',
+                    'placeholder' => 'ex : 12/10/2017 (12:00)',
+                    'class' => 'form-control ',
                     'value' => "",
-                ),
-                'constraints' => array(
-                    new Assert\NotBlank(['message' => 'Ce champ n\'est pas remplit']),
-                    new Assert\DateTime([
-                        'format' => 'dd/MM/yyyy (hh:ii)',
-                        'message' => 'Mauvais format ( jj/mm/aaaaa (HH:mm) )'
-                    ])
                 )
             ))
             ->add('fileFichJustificatif', VichFileType::class, array(
@@ -46,7 +40,7 @@ class AbscenceType extends AbstractType
                     new Assert\File([
                         'maxSize' => '8Mi',
                         'maxSizeMessage' => 'Le fichier est trop lourd, il ne doit pas dépasser 8Mi',
-                        'mimeTypes' => ['image/png', 'image/jpeg'],
+                        'mimeTypes' => ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf'],
                         'mimeTypesMessage' => 'Les formats autorisés sont .png et .jpeg'
                     ])
                 )

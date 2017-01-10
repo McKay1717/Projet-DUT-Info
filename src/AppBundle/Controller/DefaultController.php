@@ -13,10 +13,6 @@ class DefaultController extends Controller
      * @Route("/", name="homepage")
      */
     public function indexAction(Request $request) {
-        return $this->redirectToRoute('accueil');
-        // replace this example code with whatever you need
-        /*return $this->render('default/abscences.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-        ]);*/
+        return $this->generateUrl('/accueil');
     }
 }
