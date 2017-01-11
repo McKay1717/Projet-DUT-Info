@@ -79,6 +79,8 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 			return;
 		if ($null)
 			$user = new User ();
+		if ($query ['eduPersonPrimaryAffiliation'] != "student")
+			return;
 		$user->setEmail ( $query ["mail"] [0] );
 		$user->setCn ( $query ["cn"] [0] );
 		$user->setEtuid ( $query ['supannetuid'] [0] );
@@ -110,6 +112,8 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 		$user = $this->em->getRepository ( 'Gestion_Abs_IUTBM_Bundle:User' )->findOneByUid ( $userIn->getUsername () );
 		$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
 		if (count ( $query ) <= 0)
+			return;
+		if ($query ['eduPersonPrimaryAffiliation'] != "student")
 			return;
 		$user->setEmail ( $query ["mail"] [0] );
 		$user->setCn ( $query ["cn"] [0] );
