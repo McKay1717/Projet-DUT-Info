@@ -17,3 +17,8 @@
 /bin
 /var
 /app/bootstrap.php.cache
+/web/.htaccess
+/web/app.php
+/web/app_dev.php
+/web/config.php
+/web/robots.txt

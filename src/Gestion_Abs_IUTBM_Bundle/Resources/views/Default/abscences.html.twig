@@ -50,18 +50,20 @@
 
                 <h4>Les absences</h4>
 
-                <table class="table table-responsive table-bordered table-striped" style="text-align: center">
+                <div class="table table-responsive">
 
-                    <thead>
+                    <table class="table table-bordered table-striped" style="text-align: center">
+
+                        <thead>
                         <tr>
                             <th>N° absence</th>
                             <th>Début de l'absence</th>
                             <th>Fin de l'absence</th>
                             <th>Justifier</th>
                         </tr>
-                    </thead>
+                        </thead>
 
-                    <tbody>
+                        <tbody>
 
                         {% for absence in absences if absences is not empty%}
 
@@ -77,17 +79,17 @@
                             {% else %}
 
                                 <tr>
-                                    <td>{{ absence.id }}</td>
-                                    <td>{{ absence.debutAbs.date | date('d/m/Y (H:i)') }}</td>
-                                    <td><i>Non renseigné</i></td>
-                                    <td>
-                                        <form action="{{ path('absences') }}" method="post">
-                                            <input type="hidden" name="absence" value="{{ absence.id }}">
-                                            <button type="submit" class="btn btn-danger btn-xs">
-                                                <span class="glyphicon glyphicon-edit"></span>
-                                            </button>
-                                        </form>
-                                     </td>
+                                <td>{{ absence.id }}</td>
+                                <td>{{ absence.debutAbs.date | date('d/m/Y (H:i)') }}</td>
+                                <td><i>Non renseigné</i></td>
+                                <td>
+                                    <form action="{{ path('absences') }}" method="post">
+                                        <input type="hidden" name="absence" value="{{ absence.id }}">
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </button>
+                                    </form>
+                                </td>
 
                             {% endif %}
 
@@ -97,9 +99,11 @@
                             </tr>
                         {% endfor %}
 
-                    </tbody>
+                        </tbody>
 
-                </table>
+                    </table>
+
+                </div>
 
             </div>
 
