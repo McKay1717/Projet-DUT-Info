@@ -113,7 +113,7 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 		$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
 		if (count ( $query ) <= 0)
 			return;
-		if ($query ['eduPersonPrimaryAffiliation'] != "student")
+		if ($query ['eduPersonPrimaryAffiliation'][0] != "student")
 			return;
 		$user->setEmail ( $query ["mail"] [0] );
 		$user->setCn ( $query ["cn"] [0] );
