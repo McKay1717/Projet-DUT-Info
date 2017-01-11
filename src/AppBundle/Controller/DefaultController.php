@@ -13,6 +13,6 @@ class DefaultController extends Controller
      * @Route("/", name="homepage")
      */
     public function indexAction(Request $request) {
-        return $this->generateUrl('/accueil');
+        return $this->redirectToRoute('accueil');
     }
 }

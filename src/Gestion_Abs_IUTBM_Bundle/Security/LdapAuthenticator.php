@@ -66,7 +66,7 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 	 *
 	 */
 	public function getUser($credentials, UserProviderInterface $userProvider) {
-		$ldap = new LdapClient ( '127.0.0.1', 9999, 3, false, false );
+		$ldap = new LdapClient ( '192.168.7.1', 9999, 3, false, false );
 		$user = $this->em->getRepository ( 'Gestion_Abs_IUTBM_Bundle:User' )->findOneByUid ( $credentials ['username'] );
 		$null = is_null ( $user );
 		try {
@@ -75,12 +75,11 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 			throw new CustomUserMessageAuthenticationException ( $this->failMessage );
 		}
 		$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
-		dump($query);
 		if (count ( $query ) <= 0)
 			return;
 		if ($null)
 			$user = new User ();
-		if ($query ['edupersonprimaryaffiliation'][0] != "student")
+		if ($query ['eduPersonPrimaryAffiliation'][0] != "student")
 			return;
 		$user->setEmail ( $query ["mail"] [0] );
 		$user->setCn ( $query ["cn"] [0] );
@@ -104,7 +103,7 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 	 *
 	 */
 	public function checkCredentials($credentials, UserInterface $userIn) {
-		$ldap = new LdapClient ( '127.0.0.1', 9999, 3, false, false );
+		$ldap = new LdapClient ( '192.168.7.1', 9999, 3, false, false );
 		try {
 			$ldap->bind ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", $credentials ['password'] );
 		} catch ( ConnectionException $e ) {
@@ -114,7 +113,7 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 		$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
 		if (count ( $query ) <= 0)
 			return;
-		if ($query ['edupersonprimaryaffiliation'][0] != "student")
+		if ($query ['eduPersonPrimaryAffiliation'][0] != "student")
 			return;
 		$user->setEmail ( $query ["mail"] [0] );
 		$user->setCn ( $query ["cn"] [0] );
