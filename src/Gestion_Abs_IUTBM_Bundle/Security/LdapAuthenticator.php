@@ -76,11 +76,13 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 		}
 		$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
 		if (count ( $query ) <= 0)
-			return;
+			throw new CustomUserMessageAuthenticationException ( $this->failMessage );
 		if ($null)
 			$user = new User ();
 		if ($query ['edupersonprimaryaffiliation'] [0] != "student")
-			return;
+			throw new CustomUserMessageAuthenticationException ( "Vous n'êtes pas étudiant" );
+		if ($query ['supannaffectation'] [0] != "IUT de Belfort-Montbéliard")
+			throw new CustomUserMessageAuthenticationException ( "Vous n'êtes pas de l'IUT de Belfort-Montbéliard" );
 		$user->setEmail ( $query ["mail"] [0] );
 		$user->setCn ( $query ["cn"] [0] );
 		$user->setEtuid ( $query ['supannetuid'] [0] );
@@ -112,9 +114,11 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 		$user = $this->em->getRepository ( 'Gestion_Abs_IUTBM_Bundle:User' )->findOneByUid ( $userIn->getUsername () );
 		$query = $ldap->find ( "uid=" . $credentials ['username'] . ",ou=people,dc=univ-fcomte,dc=fr", '(&(objectclass=*))' ) [0];
 		if (count ( $query ) <= 0)
-			return;
+			throw new CustomUserMessageAuthenticationException ( $this->failMessage );
 		if ($query ['edupersonprimaryaffiliation'] [0] != "student")
-			return;
+			throw new CustomUserMessageAuthenticationException ( "Vous n'êtes pas étudiant" );
+		if ($query ['supannaffectation'] [0] != "IUT de Belfort-Montbéliard")
+			throw new CustomUserMessageAuthenticationException ( "Vous n'êtes pas de l'IUT de Belfort-Montbéliard" );
 		$user->setEmail ( $query ["mail"] [0] );
 		$user->setCn ( $query ["cn"] [0] );
 		$user->setEtuid ( $query ['supannetuid'] [0] );
