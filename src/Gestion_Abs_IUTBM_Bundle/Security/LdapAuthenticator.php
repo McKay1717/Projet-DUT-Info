@@ -79,8 +79,7 @@ class LdapAuthenticator extends AbstractGuardAuthenticator {
 			return;
 		if ($null)
 			$user = new User ();
-		if ($query ['eduPersonPrimaryAffiliation'][0] != "student")
-			return;
+		if ($query ['eduPersonPrimaryAffiliation'][0] != "student") return;
 		$user->setEmail ( $query ["mail"] [0] );
 		$user->setCn ( $query ["cn"] [0] );
 		$user->setEtuid ( $query ['supannetuid'] [0] );
