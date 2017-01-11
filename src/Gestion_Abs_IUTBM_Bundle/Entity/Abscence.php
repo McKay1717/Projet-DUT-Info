@@ -62,12 +62,12 @@ class Abscence
      */
     private $user;
 
-    /*public function __construct() {
+    public function __construct() {
         //$this->debutAbs = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
         //$this->finAbs = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
-        $this->debutAbs = null;
+        $this->debutAbs = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
         $this->finAbs = null;
-    }*/
+    }
 
     /**
      * Set debutAbs

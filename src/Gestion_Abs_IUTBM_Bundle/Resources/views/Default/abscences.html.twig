@@ -8,13 +8,13 @@
 
         <br><br><br>
 
-        {% if app.session.flashBag.has('justifier') %}
+        {#{% if app.session.flashBag.has('justifier') %}
             <div class="alert alert-success alert-dismissible">
                 {% for msg in app.session.flashBag.has('justifier') %}
                     {{ msg }}
                 {% endfor %}
             </div>
-        {% endif %}
+        {% endif %}#}
 
         <div class="row">
             <div class="col-lg-12">
@@ -26,8 +26,23 @@
 
         <div class="row">
 
+            <div class="col-lg-offset-2 col-lg-8">
+                <a href="{{ path('addAbsence') }}" class="btn btn-success">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    Ajouter une absence
+                </a>
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="row">
+
             <div class="col-lg-offset-2 col-lg-8 well">
+
                 <h4>Information sur l'étudiant</h4>
+
                 <div class="row">
                     <div class="col-lg-6 barre-droite">
                         <strong>Pseudo </strong> : {{ app.user.uid }}<br>
@@ -40,6 +55,7 @@
                         <strong>Etape </strong> : {{ app.user.ufcLibelleEtape }}
                     </div>
                 </div>
+
             </div>
 
         </div>
