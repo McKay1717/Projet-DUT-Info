@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Vich\UploaderBundle\Mapping\PropertyMapping;
 
 /**
  * Abscence controller.
@@ -84,12 +85,13 @@ class AbscenceController extends Controller {
 
         if ($form->isSubmitted()) {
 
-            //var_dump($form->getData()); die;
-
             if ($form->isValid()) {
 
+                $security = $this->get('security.token_storage');
+                $token = $security->getToken();
+                $user = $token->getUser();
+
                 $finAbs = $form->getData()->getFinAbs();
-                //var_dump($finAbs); die;
                 $fileFichJustificatif = $form->getData()->getFileFichJustificatif();
 
                 if ($debutAbs < $finAbs) {
