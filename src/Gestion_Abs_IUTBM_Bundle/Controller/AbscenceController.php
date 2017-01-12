@@ -87,10 +87,6 @@ class AbscenceController extends Controller {
 
             if ($form->isValid()) {
 
-                $security = $this->get('security.token_storage');
-                $token = $security->getToken();
-                $user = $token->getUser();
-
                 $finAbs = $form->getData()->getFinAbs();
                 $fileFichJustificatif = $form->getData()->getFileFichJustificatif();
 
