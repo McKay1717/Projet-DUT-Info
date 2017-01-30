@@ -7,7 +7,6 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class AbscenceAddType extends AbstractType{
 
@@ -38,21 +37,7 @@ class AbscenceAddType extends AbstractType{
                     'value' => "",
                 )
             ))
-            ->add('fileFichJustificatif', VichFileType::class, array(
-                'label' => 'Justificatif de l\'absence',
-                'attr' => array(
-                    'class' => 'filestyle'
-                ),
-                'constraints' => array(
-                    new Assert\NotBlank(['message' => 'Ce champ n\'est pas remplit']),
-                    new Assert\File([
-                        'maxSize' => '8Mi',
-                        'maxSizeMessage' => 'Le fichier est trop lourd, il ne doit pas dépasser 8Mi',
-                        'mimeTypes' => ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf'],
-                        'mimeTypesMessage' => 'Les formats autorisés sont .png et .jpeg'
-                    ])
-                )
-            ))
+            ->add('justificatif', JustificatifType::class)
         ;
     }
 

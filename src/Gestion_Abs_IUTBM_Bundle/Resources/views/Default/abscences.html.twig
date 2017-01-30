@@ -8,13 +8,11 @@
 
         <br><br><br>
 
-        {#{% if app.session.flashBag.has('justifier') %}
+        {% for msg in app.session.flashBag.get('justifier') %}
             <div class="alert alert-success alert-dismissible">
-                {% for msg in app.session.flashBag.has('justifier') %}
-                    {{ msg }}
-                {% endfor %}
+                {{ msg }}
             </div>
-        {% endif %}#}
+        {% endfor %}
 
         <div class="row">
             <div class="col-lg-12">
@@ -81,39 +79,22 @@
 
                         <tbody>
 
-                        {% for absence in absences if absences is not empty%}
-
-                            {% if absence.fichJustificatif != '' %}
-
+                            {% for absence in absences if absences is not empty%}
                                 <tr>
                                     <td>{{ absence.id }}</td>
                                     <td>{{ absence.debutAbs.date | date('d/m/Y (H:i)') }}</td>
                                     <td>{{ absence.finAbs.date | date('d/m/Y (H:i)')}}</td>
-                                    <td><span class="glyphicon glyphicon-ok"></span></td>
+                                    {% if absence.justificatif != null %}
+                                        <td><span class="glyphicon glyphicon-ok"></span></td>
+                                    {% else %}
+                                        <td><span class="glyphicon glyphicon-remove red"></span></td>
+                                    {% endif %}
                                 </tr>
-
                             {% else %}
-
                                 <tr>
-                                <td>{{ absence.id }}</td>
-                                <td>{{ absence.debutAbs.date | date('d/m/Y (H:i)') }}</td>
-                                <td><i>Non renseigné</i></td>
-                                <td>
-                                    <form action="{{ path('absences') }}" method="post">
-                                        <input type="hidden" name="absence" value="{{ absence.id }}">
-                                        <button type="submit" class="btn btn-danger btn-xs">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </button>
-                                    </form>
-                                </td>
-
-                            {% endif %}
-
-                        {% else %}
-                            <tr>
-                                <td colspan="4">Vous n'avez pas d'absence</td>
-                            </tr>
-                        {% endfor %}
+                                    <td colspan="4">Vous n'avez pas d'absence</td>
+                                </tr>
+                            {% endfor %}
 
                         </tbody>
 

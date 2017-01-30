@@ -10,3 +10,7 @@ table, .list-item-group-text {
     text-align: center;
     vertical-align: middle;
 }
+
+.red {
+    color: #9a0b08;
+}
