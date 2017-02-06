@@ -95,6 +95,7 @@ class AbscenceController extends Controller {
                     $justificatif->setDebutAbs($debutAbs);
                     $justificatif->setFinAbs($finAbs);
                     $justificatif->setFichier($file->getFichier());
+                    $justificatif->setUser($user->getId());
                     $em->persist($justificatif);
                     $em->flush();
 

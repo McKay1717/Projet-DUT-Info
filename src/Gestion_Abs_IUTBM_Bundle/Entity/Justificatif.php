@@ -54,6 +54,13 @@ class Justificatif
     private $fichier;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="n_user", type="integer")
+     */
+    private $user;
+
+    /**
      * Get id
      *
      * @return int
@@ -154,5 +161,30 @@ class Justificatif
         return $this->fichier;
     }
 
-}
 
+
+
+    /**
+     * Set user
+     *
+     * @param int $user
+     *
+     * @return Justificatif
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return int
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+}
