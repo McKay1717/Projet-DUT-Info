@@ -5,12 +5,19 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="keywords" content="{% block motCles %}{% endblock %} }}"/>
-        <meta name="description" content="{% block description %}{% endblock %} }}"/>
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset('bundles/framework/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/framework/css/my_style.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/framework/css/bootstrap-datetimepicker.min.css') }}">
-        {% block stylesheets %}{% endblock %}
+        <meta name="description" content="
+        {% block description %}
+            Si tu es un étudiant de l'université de Franche-Comté, que tu as été absent et que tu souhaites justifier cela, alors tu es au bon endroit.
+            Il te suffit juste de te connecter avec tes pseudo et mot de passe habituels et tu accèderas à tes absences.
+        {% endblock %} }}"/>
+        <title>{% block title %}IUT de Belfort-Montbélliard{% endblock %}</title>
+        {% stylesheets filter='cssrewrite, ?scssphp'
+            'bundles/framework/css/bootstrap.min.css'
+            'bundles/framework/css/my_style.css'
+            'bundles/framework/css/bootstrap-datetimepicker.min.css'
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+        {% endstylesheets %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
 
@@ -18,46 +25,15 @@
 
     {% block body %}{% endblock %}
 
-    <script src="{{ asset('bundles/framework/js/jquery.js') }}"></script>
-    <script src="{{ asset('bundles/framework/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bundles/framework/js/bootstrap-datetimepicker.min.js') }}"></script>
-    <script src="{{ asset('bundles/framework/js/bootstrap-filestyle.min.js') }}"></script>
-
-    {% block javascripts %}
-
-        <script>
-
-            (function ($) {
-
-                //error symfony
-                var $li = $('form fieldset ul li');
-                $li.parent().css({
-                    'list-style': 'none',
-                    'margin-left': '-40px',
-                });
-                $li.addClass('alert alert-danger');
-
-                //upload
-                $(":file").filestyle({
-                    buttonName: "btn-info"
-                });
-
-                //datepicker
-                $('.datetime').datetimepicker({
-                    todayBtn:"true",
-                    dateformat:"dd/mm/yyyy (hh:ii)",
-                    autoclose:"true",
-                    pickerPosition:"bottom-left",
-                    startView:"year",
-                    minView:"hour",
-                    language:"fr"
-                });
-
-            })(jQuery);
-
-        </script>
-
-    {% endblock %}
+    {% javascripts filter='jsqueeze'
+        'bundles/framework/js/jquery.js'
+        'bundles/framework/js/bootstrap.min.js'
+        'bundles/framework/js/bootstrap-datetimepicker.min.js'
+        'bundles/framework/js/bootstrap-filestyle.min.js'
+        'bundles/app.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
     </body>
 

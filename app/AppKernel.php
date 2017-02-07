@@ -13,6 +13,7 @@ class AppKernel extends Kernel {
 				new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle (),
 				new AppBundle\AppBundle (),
 				new Vich\UploaderBundle\VichUploaderBundle (),
+                new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 				new Gestion_Abs_IUTBM_Bundle\Gestion_Abs_IUTBM_Bundle (),
 		];
 		
