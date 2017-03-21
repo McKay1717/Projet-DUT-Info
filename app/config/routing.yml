@@ -6,6 +6,11 @@ gestion.abs.iutbm.:
 abs:
     type:     rest
     resource: Gestion_Abs_IUTBM_Bundle\Controller\AbscenceController
+    
+justificatif:
+    type:     rest
+    resource: Gestion_Abs_IUTBM_Bundle\Controller\JustificatifController
+    
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
