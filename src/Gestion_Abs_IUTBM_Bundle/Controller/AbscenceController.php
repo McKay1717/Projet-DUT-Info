@@ -3,6 +3,7 @@
 namespace Gestion_Abs_IUTBM_Bundle\Controller;
 
 use Gestion_Abs_IUTBM_Bundle\Entity\Abscence;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Gestion_Abs_IUTBM_Bundle\Entity\Justificatif;
 use Gestion_Abs_IUTBM_Bundle\Form\AbscenceAddType;
 use Gestion_Abs_IUTBM_Bundle\Form\AbscenceType;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Vich\UploaderBundle\Mapping\PropertyMapping;
+use FOS\RestBundle\View\ViewHandler;
+use FOS\RestBundle\View\View;
 
 /**
  * Abscence controller.
@@ -21,7 +24,24 @@ use Vich\UploaderBundle\Mapping\PropertyMapping;
  */
 class AbscenceController extends Controller {
 
-
+	
+	/**
+	 * @Rest\View()
+	 * @Rest\Get("/absencesList")
+	 */
+	public function getAbsencesAction(Request $request)
+	{
+		$SCODOC_IP = "0.0.0.0";
+		if($request->getClientIp() != $SCODOC_IP)
+		{
+			throw $this->createAccessDeniedException ();
+		}
+		$em = $this->getDoctrine()->getManager();
+		$absences = $em->getRepository('Gestion_Abs_IUTBM_Bundle:Abscence')->findAll();
+		$view = View::create($absences);
+		$view->setFormat('json');
+		return $view;
+	}
     /**
      * Lists absences of studant
      *

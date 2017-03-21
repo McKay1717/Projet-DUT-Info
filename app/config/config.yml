@@ -10,6 +10,8 @@ parameters:
     locale: en
 
 framework:
+    serializer:
+        enabled: true
     #esi:             ~
     #translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
@@ -78,7 +80,11 @@ vich_uploader:
             delete_on_update:   false
             delete_on_remove: true
             namer: vich_uploader.namer_uniqid
-
+fos_rest:
+    routing_loader:
+        include_format: false
+    view:
+        view_response_listener: true
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'

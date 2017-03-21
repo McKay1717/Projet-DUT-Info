@@ -3,7 +3,9 @@ gestion.abs.iutbm.:
     type:     annotation
     prefix:   /
 
-
+abs:
+    type:     rest
+    resource: Gestion_Abs_IUTBM_Bundle\Controller\AbscenceController
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
